@@ -32,7 +32,9 @@ function shuffleArray(array) {
 
 // array from 1 - 125
 let nums = [...Array(125).keys()].map(x => x + 1);
-nums = shuffleArray(nums);
+console.log(nums);
+// nums = shuffleArray(nums);
+
 
 // adding the rederer
 const renderer = new THREE.WebGLRenderer();
@@ -59,22 +61,22 @@ const orbit = new OrbitControls(camera, renderer.domElement);
 
 
 // set camera position
-camera.position.set(-10,0,5);
+camera.position.set(10,10,10);
 
 // texture loader
 const textureLoader = new THREE.TextureLoader();
 
 // make cube geometry and cube material
 const cubeGeometry = new THREE.BoxGeometry();
-const cubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
+// const cubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
 // const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
 const offset = 1.8;
 let index = 0;
 
-for(let x = -2; x <= 2; x++) {
-    for(let y = -2; y <= 2; y++) {
-        for(let z = -2; z <= 2; z++) {
+for(let z = 2; z >= -2; z--) {
+    for(let y = 2; y >= -2; y--) {
+        for(let x = -2; x <= 2; x++) {
 
             const unique = nums[index];
             index++;
