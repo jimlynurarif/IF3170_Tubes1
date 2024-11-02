@@ -1,5 +1,5 @@
 # IF3170_Tubes1 🌱
->Tugas Besar 1 IF2210 OOP
+>This is the repository for the artificial intelligence assignment IF3170 at [Bandung Institute of Technology](https://itb.ac.id/)
 
 ## Contributors 🐄
 | NIM | Nama |
