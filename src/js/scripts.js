@@ -70,6 +70,7 @@ const textureLoader = new THREE.TextureLoader();
 const cubeGeometry = new THREE.BoxGeometry();
 // const cubeMaterial = new THREE.MeshBasicMaterial({color: 0x0000ff});
 // const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+//test
 
 const offset = 1.8;
 let index = 0;
