@@ -1,11 +1,11 @@
-# IF3170_Tubes1 🤖
+# IF3170_Tubes1 🌱
 >Tugas Besar 1 IF2210 OOP
 
 ## Contributors 🐄
 | NIM | Nama |
 | :---: | :---: |
 | [13522123](https://github.com/jimlynurarif) | [Jimly Nur Arif](https://github.com/jimlynurarif)|
-| [13522133](https://github.com/YosefRafaelJoshua) | [YosefRafaelJoshua](https://github.com/Yosef Rafael Joshua)|
+| [13522133](https://github.com/YosefRafaelJoshua) | [Yosef Rafael Joshua](https://github.com/YosefRafaelJoshua)|
 
 ## How To use 🏨
 1. Clone this repository
