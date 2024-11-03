@@ -16,9 +16,13 @@ git clone https://github.com/jimlynurarif/IF3170_Tubes1.git
 ```
 cd IF3170_Tubes1
 ```
-3. Run
+3. Run FrontEnd
 ```
 npm run start-full
+```
+4. Run BackEnd
+```
+cd src/backend; python app.py
 ```
 4. Open Website 
 ```
