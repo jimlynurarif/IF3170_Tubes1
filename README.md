@@ -35,3 +35,7 @@ cd src/backend; python app.py
 ```
 localhost:1234
 ```
+7. Click Start
+8. See the random cubes, if you agree then select algorithm, If you not agree repeat step number 7
+9. Click Okay
+10. See the result of algorithm
