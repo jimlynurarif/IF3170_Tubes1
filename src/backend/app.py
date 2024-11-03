@@ -5,9 +5,12 @@ import random
 app = Flask(__name__)
 CORS(app)
 
+nums = []
+
 # start itu untuk membuat initial state (random tapi diantara 1-125 inklusif)
 @app.route('/start-algorithm', methods=['POST'])
 def start_algorithm():
+    global nums
     nums = list(range(1, 126))
     random.shuffle(nums)
     return jsonify(nums)
@@ -24,6 +27,7 @@ def okay():
 def array_algorithm_result(algorithm):
     # Logika untuk membuat array awal berdasarkan pilihan algoritma
     if algorithm == 'SteepestAscent':
+        print(nums)
         return list(range(1, 126))
     elif algorithm == 'GeneticAlgorithm':
         return list(range(1, 126))
