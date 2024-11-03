@@ -7,6 +7,9 @@
 | [13522123](https://github.com/jimlynurarif) | [Jimly Nur Arif](https://github.com/jimlynurarif)|
 | [13522133](https://github.com/YosefRafaelJoshua) | [Yosef Rafael Joshua](https://github.com/YosefRafaelJoshua)|
 
+## Requirement
+>Make sure you already install Python and NodeJs
+
 ## How To use 🏨
 1. Clone this repository
 ```
@@ -16,15 +19,19 @@ git clone https://github.com/jimlynurarif/IF3170_Tubes1.git
 ```
 cd IF3170_Tubes1
 ```
-3. Run FrontEnd
+3. Install
+```
+pip install Flask Flask-CORS
+```
+4. Run FrontEnd
 ```
 npm run start-full
 ```
-4. Run BackEnd
+5. Run BackEnd
 ```
 cd src/backend; python app.py
 ```
-4. Open Website 
+6. Open Website 
 ```
 localhost:1234
 ```
