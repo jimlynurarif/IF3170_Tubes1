@@ -1,3 +1,5 @@
+from objectiveFunction import objectiveFunction
+from steepestAscent import steepestAscent
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import random
@@ -27,8 +29,7 @@ def okay():
 def array_algorithm_result(algorithm):
     # Logika untuk membuat array awal berdasarkan pilihan algoritma
     if algorithm == 'SteepestAscent':
-        print(nums)
-        return list(range(1, 126))
+        return(steepestAscent(nums, objectiveFunction(nums)))
     elif algorithm == 'GeneticAlgorithm':
         return list(range(1, 126))
     elif algorithm == 'SimulatedAnnealing':

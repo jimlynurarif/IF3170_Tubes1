@@ -126,10 +126,10 @@ def triagonalValues(array:list) -> int:
     third = array[20] + array[41] + array[62] + array[83] + array[104]
     fourth = array[24] + array[43] + array[62] + array[81] + array[100]
 
-    print(first)
-    print(second)
-    print(third)
-    print(fourth)
+    # print(first)
+    # print(second)
+    # print(third)
+    # print(fourth)
 
     if first != 315:
         value -=1
