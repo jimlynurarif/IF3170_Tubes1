@@ -7,19 +7,24 @@ let cubes = [];  // Array untuk menyimpan objek cube
 // Fungsi untuk membuat tekstur dengan angka di dalamnya
 function createTexture(number) {
     const canvas = document.createElement('canvas');
-    canvas.width = 64;
-    canvas.height = 64;
+    canvas.width = 1024;
+    canvas.height = 1024;
     const context = canvas.getContext('2d');
 
     context.fillStyle = 'white';
-    context.fillRect(0, 0, 64, 64);
+    context.fillRect(0, 0, 1024, 1024);
     context.fillStyle = 'black';
-    context.font = '60px Arial';
+    context.font = '480px Arial';
     context.textAlign = 'center';
     context.textBaseline = 'middle';
-    context.fillText(number, 32, 32);
+    context.fillText(number, 512, 512);
 
-    return new THREE.CanvasTexture(canvas);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.minFilter = THREE.LinearFilter; // Mengurangi pikselasi pada tekstur
+    texture.magFilter = THREE.LinearFilter;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+    return texture;
 }
 
 // Fungsi untuk memulai algoritma dan mendapatkan initial state
@@ -80,20 +85,19 @@ function renderArray(nums) {
 // Inisialisasi Three.js
 function init() {
     // Setup renderer
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);  // Menambahkan devicePixelRatio untuk kualitas lebih tinggi
     document.body.appendChild(renderer.domElement);
 
     // Setup scene
     scene = new THREE.Scene();
 
     // Setup camera
-    //Adding Camera
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    // set camera position
-    camera.position.set(10,10,10);
+    camera.position.set(10, 10, 10);
 
-    // adding axes helper
+    // Tambahkan axes helper
     const axeshelper = new THREE.AxesHelper(5);
     scene.add(axeshelper);
 
