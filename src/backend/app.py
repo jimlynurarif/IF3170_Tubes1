@@ -1,3 +1,5 @@
+from backend.objectiveFunctionSteepest import objectiveFunctionSteepest
+from steepestAscent import steepestAscent
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import random
@@ -29,6 +31,8 @@ def array_algorithm_result(algorithm):
     global nums
     if algorithm == 'SimulatedAnnealing':
         return simulated_annealing(nums)
+    elif algorithm == 'SteepestAscent':
+        return steepestAscent(nums, objectiveFunctionSteepest(nums))
     return list(range(1, 126))
 
 def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None):
