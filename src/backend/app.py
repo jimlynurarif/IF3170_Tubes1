@@ -34,11 +34,15 @@ def okay():
 def array_algorithm_result(algorithm):
     global nums
     global iteration_data
+    global duration
     if algorithm == 'SimulatedAnnealing':
         return simulated_annealing(nums)
     elif algorithm == 'SteepestAscent':
         iteration_data = []
+        duration = 0
+        start_time = time.time()
         states, iteration_data = steepestAscent(nums, objectiveFunctionSteepest(nums), [])
+        duration = time.time() - start_time
         return states
     return list(range(1, 126))
 

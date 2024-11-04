@@ -48,7 +48,7 @@ function displayChart(data) {
 async function fetchStuckLocalOptima() {
     const response = await fetch('http://127.0.0.1:5000/get-stuck-local-optima');
     const data = await response.json();
-    document.getElementById('stuckLocalOptimaCount').innerText = `Stuck di Local Optima: ${data}`;
+    document.getElementById('stuckLocalOptimaCount').innerText = `Stuck di Local Optima (SA): ${data}`;
 }
 
 // Fungsi untuk membuat tekstur dengan angka di dalamnya
