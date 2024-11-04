@@ -4,6 +4,35 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 let scene, camera, renderer, orbit;
 let cubes = [];  // Array untuk menyimpan objek cube
 
+async function fetchIterationData() {
+    const response = await fetch('http://127.0.0.1:5000/get-iteration-data');
+    const data = await response.json();
+    displayChart(data);  // Panggil fungsi untuk menampilkan chart
+}
+
+function displayChart(data) {
+    const ctx = document.getElementById('objectiveChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: data.length }, (_, i) => i + 1),
+            datasets: [{
+                label: 'Objective Function Value',
+                data: data,
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Iteration' } },
+                y: { display: true, title: { display: true, text: 'Objective Function Value' } }
+            }
+        }
+    });
+}
 // Fungsi untuk membuat tekstur dengan angka di dalamnya
 function createTexture(number) {
     const canvas = document.createElement('canvas');
@@ -54,6 +83,7 @@ async function sendOkay() {
 }
 
 // Render array dalam Three.js
+// Render array dalam Three.js
 function renderArray(nums) {
     // Hapus cube yang ada sebelumnya
     cubes.forEach(cube => scene.remove(cube));
@@ -70,17 +100,46 @@ function renderArray(nums) {
                 const unique = nums[index];
                 index++;
 
+                // Buat tekstur untuk angka
                 const cubeNumTexture = createTexture(unique);
-                const cubeNumMaterial = new THREE.MeshBasicMaterial({ map: cubeNumTexture });
-                const cube = new THREE.Mesh(cubeGeometry, cubeNumMaterial);
 
+                // Beri warna acak untuk setiap kubus
+                const randomColor = new THREE.Color(Math.random(), Math.random(), Math.random());
+                const cubeNumMaterial = new THREE.MeshBasicMaterial({ 
+                    map: cubeNumTexture, 
+                    color: randomColor  // Warna acak
+                });
+
+                const cube = new THREE.Mesh(cubeGeometry, cubeNumMaterial);
                 cube.position.set(x * offset, y * offset, z * offset);
+                
                 scene.add(cube);
                 cubes.push(cube);
             }
         }
     }
 }
+
+
+// Fungsi untuk menambahkan star field (bidang bintang)
+function addStarField() {
+    const starGeometry = new THREE.BufferGeometry();
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff });
+    
+    const starVertices = [];
+    for (let i = 0; i < 1000; i++) {
+        const x = THREE.MathUtils.randFloatSpread(200); // Sebaran acak dari -100 ke 100
+        const y = THREE.MathUtils.randFloatSpread(200);
+        const z = THREE.MathUtils.randFloatSpread(200);
+        starVertices.push(x, y, z);
+    }
+
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+}
+
 
 // Inisialisasi Three.js
 function init() {
@@ -92,6 +151,7 @@ function init() {
 
     // Setup scene
     scene = new THREE.Scene();
+    // scene.background = new THREE.Color(0x537C76);
 
     // Setup camera
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -104,10 +164,15 @@ function init() {
     // Setup orbit controls
     orbit = new OrbitControls(camera, renderer.domElement);
 
+    // Star Background
+    addStarField();
+
     // Event listener untuk tombol Start dan Okay
     document.getElementById("startButton").addEventListener("click", startAlgorithm);
-    document.getElementById("okayButton").addEventListener("click", sendOkay);
-
+    document.getElementById("okayButton").addEventListener("click", async () => {
+        await sendOkay();
+        await fetchIterationData();  // Panggil fungsi untuk mendapatkan dan menampilkan data iterasi
+    });
     animate();
 }
 
