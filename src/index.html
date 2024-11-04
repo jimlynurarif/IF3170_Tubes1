@@ -6,6 +6,55 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Tambahkan Chart.js -->
     <script type="module" src="/src/js/scripts.js"></script>
+    <style>
+        /* Styling dropdown */
+        #algorithmChoice {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 8px;
+            border: 2px solid #537C76;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+
+        /* Styling tombol */
+        #startButton, #okayButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            background-color: #537C76;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #startButton:hover, #okayButton:hover {
+            background-color: #375a58;
+        }
+
+        /* Styling kanvas */
+        #objectiveChart {
+            display: block;
+            margin: 20px auto;
+            max-width: 90%;
+            background-color: #f9f9f9;
+            border: 2px solid #537C76;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* Pengaturan body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeaea;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <select id="algorithmChoice">

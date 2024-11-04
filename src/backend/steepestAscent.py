@@ -1,4 +1,5 @@
 from objectiveFunctionSteepest import objectiveFunctionSteepest
+from typing import Tuple
 
 def findSteepestNeighbor(array:list, objectiveValue:int) -> list:
     currentList = list(array)
@@ -22,13 +23,14 @@ def findSteepestNeighbor(array:list, objectiveValue:int) -> list:
     print("currentlist before return:", currentList)
     return currentList
 
-def steepestAscent(array:list, objectiveValue:int) -> list:
+def steepestAscent(array:list, objectiveValue:int, iteration:list) -> tuple[list[int] , list[int]]: # the first element of tuple is the actual states, the second is the iteration
     neighbor = findSteepestNeighbor(array, objectiveValue)
+    iteration.append(objectiveFunctionSteepest(neighbor))
     # print("neighbor", neighbor)
     if neighbor == array:
-        return neighbor
+        return neighbor, iteration
     else:
-        return(steepestAscent(neighbor,objectiveFunctionSteepest(neighbor)))
+        return(steepestAscent(neighbor,objectiveFunctionSteepest(neighbor), iteration))
 
 a = [1 for i in range(125)]
 b = [0 for i in range(125)]
@@ -46,4 +48,7 @@ c[5], c[6] = c[6], c[5]
 # print("end steepest ascent:", steepestAscent(b, objectiveFunction(b)))
 
 # print("1")
-# print(findSteepestNeighbor(d, objectiveFunction(d)))
+# x, y = steepestAscent(b, objectiveFunctionSteepest(b), [])
+# print("x:", x)
+# print("y:", y)
+# print(findSteepestNeighbor(d, objectiveFunctionSteepest(d)))
