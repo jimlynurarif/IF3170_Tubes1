@@ -1,4 +1,4 @@
-from backend.objectiveFunctionSteepest import objectiveFunctionSteepest
+from objectiveFunctionSteepest import objectiveFunctionSteepest
 from steepestAscent import steepestAscent
 from flask import Flask, jsonify, request
 from flask_cors import CORS
