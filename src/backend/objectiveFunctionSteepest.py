@@ -145,7 +145,7 @@ def triagonalValues(array:list) -> int:
 
     return value
 
-def objectiveFunction(array:list) -> int:
+def objectiveFunctionSteepest(array:list) -> int:
     value = 0
     value += rowValues(array)
     value += pillarValues(array)

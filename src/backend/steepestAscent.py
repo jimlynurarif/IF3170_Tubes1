@@ -1,4 +1,4 @@
-from objectiveFunction import objectiveFunction
+from backend.objectiveFunctionSteepest import objectiveFunction
 
 def findSteepestNeighbor(array:list, objectiveValue:int) -> list:
     currentList = list(array)
