@@ -16,8 +16,18 @@ async function fetchDuration() {
     displayDuration(data);
 }
 
+async function fetchEpsilon() {
+    const response = await fetch('http://127.0.0.1:5000/get-epsilon');
+    const data = await response.json();
+    displayEpsilon(data);
+}
+
 function displayDuration(data){
     document.getElementById('duration').innerText = `Durasi: ${data} detik`;
+}
+
+function displayEpsilon(data){
+    document.getElementById('epsilon').innerText = `Epsilon counter (SA): ${data}`;
 }
 
 function displayChart(data) {
@@ -190,6 +200,7 @@ function init() {
     document.getElementById("okayButton").addEventListener("click", async () => {
         await sendOkay();
         await fetchDuration();
+        await fetchEpsilon();
         await fetchStuckLocalOptima();
         await fetchIterationData();
     });

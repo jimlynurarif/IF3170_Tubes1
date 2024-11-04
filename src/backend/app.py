@@ -13,6 +13,8 @@ iteration_data = []
 nums = []
 magic_number = 315  # Magic number for 5x5x5 Diagonal Magic Cube
 duration = 0
+stuck_local_optima = 0
+epsilon_counter = 0
 
 # Generate initial random state for the 5x5x5 cube
 @app.route('/start-algorithm', methods=['POST'])
@@ -107,6 +109,7 @@ def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None)
 def simulated_annealing(nums):
     global iteration_data
     global duration
+    global epsilon_counter
     start_time = time.time()
     iteration_data = []  # Reset data iterasi
 
@@ -132,11 +135,15 @@ def simulated_annealing(nums):
 
         new_cost = objective_function(current_state)
 
-        if new_cost < current_cost or random.random() < math.exp((current_cost - new_cost) / T):
+        if new_cost < current_cost:
             current_cost = new_cost
+        elif random.random() < math.exp((current_cost - new_cost) / T):
+            current_cost = new_cost
+            epsilon_counter += 1
         else:
             current_state[z1][y1][x1], current_state[z2][y2][x2] = old_val_1, old_val_2
-            local_optima_count += 1  # Increment counter for local optima
+            local_optima_count += 1
+            epsilon_counter += 1
 
         T *= alpha
 
@@ -165,6 +172,10 @@ def get_stuck_local_optima():
 @app.route('/get-duration', methods=['GET'])
 def get_duration():
     return jsonify(duration)
+
+@app.route('/get-epsilon', methods=['GET'])
+def get_epsilon_counter():
+    return jsonify(epsilon_counter)
 
 if __name__ == '__main__':
     app.run(debug=True)
