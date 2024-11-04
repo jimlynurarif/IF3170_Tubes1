@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Tambahkan Chart.js -->
     <script type="module" src="/src/js/scripts.js"></script>
     <style>
         body {
@@ -14,11 +15,11 @@
 <body>
     <select id="algorithmChoice">
         <option value="SteepestAscent">Steepest Ascent</option>
-        <option value="GeneticAlgorithm">GeneticAlgorithm</option>
+        <option value="GeneticAlgorithm">Genetic Algorithm</option>
         <option value="SimulatedAnnealing">Simulated Annealing</option>
-        <!-- Tambahkan pilihan algoritma lainnya -->
     </select>
     <button id="startButton">Start</button>
     <button id="okayButton">Okay</button>
+    <canvas id="objectiveChart" width="400" height="200"></canvas> <!-- Canvas untuk Chart -->
 </body>
 </html>

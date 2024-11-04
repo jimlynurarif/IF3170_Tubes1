@@ -86,44 +86,51 @@ def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None)
 
     return total_difference
 
+# Tambahkan variabel global untuk menyimpan nilai objective function per iterasi
+iteration_data = []
+
 def simulated_annealing(nums):
+    global iteration_data
+    iteration_data = []  # Reset data iterasi
+
     T = 100.0      # Initial temperature
     T_min = 0.001  # Minimum temperature
     alpha = 0.9999  # Cooling rate
     n = 5          # Cube dimension
 
-    # Convert nums (1D list) to a 3D cube representation
     current_state = [nums[i * 25:(i + 1) * 25] for i in range(5)]
     current_state = [[current_state[z][y * 5:(y + 1) * 5] for y in range(5)] for z in range(5)]
     current_cost = objective_function(current_state)
 
+    # Simpan nilai objective function awal
+    iteration_data.append(current_cost)
+
     while T > T_min:
-        # Pick two random positions in the cube to swap
         z1, y1, x1 = random.randint(0, n - 1), random.randint(0, n - 1), random.randint(0, n - 1)
         z2, y2, x2 = random.randint(0, n - 1), random.randint(0, n - 1), random.randint(0, n - 1)
 
-        # Perform swap and calculate new cost
         old_val_1, old_val_2 = current_state[z1][y1][x1], current_state[z2][y2][x2]
         current_state[z1][y1][x1], current_state[z2][y2][x2] = old_val_2, old_val_1
 
         new_cost = objective_function(current_state)
 
-        # Decide to accept or revert the swap based on the cost
         if new_cost < current_cost or random.random() < math.exp((current_cost - new_cost) / T):
             current_cost = new_cost
         else:
-            # Revert the swap if not accepted
             current_state[z1][y1][x1], current_state[z2][y2][x2] = old_val_1, old_val_2
 
-        # Cool down the temperature
         T *= alpha
 
-    print("current final state:", current_state)
-    print("final cost:", current_cost)
+        # Simpan nilai objective function setelah setiap iterasi
+        iteration_data.append(current_cost)
 
-    # Flatten the 3D cube to a 1D list for returning to frontend
     final_state = [num for layer in current_state for row in layer for num in row]
     return final_state
+
+# Endpoint untuk mengirim data iterasi ke frontend
+@app.route('/get-iteration-data', methods=['GET'])
+def get_iteration_data():
+    return jsonify(iteration_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

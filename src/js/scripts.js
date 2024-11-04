@@ -4,6 +4,35 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 let scene, camera, renderer, orbit;
 let cubes = [];  // Array untuk menyimpan objek cube
 
+async function fetchIterationData() {
+    const response = await fetch('http://127.0.0.1:5000/get-iteration-data');
+    const data = await response.json();
+    displayChart(data);  // Panggil fungsi untuk menampilkan chart
+}
+
+function displayChart(data) {
+    const ctx = document.getElementById('objectiveChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: data.length }, (_, i) => i + 1),
+            datasets: [{
+                label: 'Objective Function Value',
+                data: data,
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Iteration' } },
+                y: { display: true, title: { display: true, text: 'Objective Function Value' } }
+            }
+        }
+    });
+}
 // Fungsi untuk membuat tekstur dengan angka di dalamnya
 function createTexture(number) {
     const canvas = document.createElement('canvas');
@@ -140,8 +169,10 @@ function init() {
 
     // Event listener untuk tombol Start dan Okay
     document.getElementById("startButton").addEventListener("click", startAlgorithm);
-    document.getElementById("okayButton").addEventListener("click", sendOkay);
-
+    document.getElementById("okayButton").addEventListener("click", async () => {
+        await sendOkay();
+        await fetchIterationData();  // Panggil fungsi untuk mendapatkan dan menampilkan data iterasi
+    });
     animate();
 }
 
