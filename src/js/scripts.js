@@ -54,6 +54,7 @@ async function sendOkay() {
 }
 
 // Render array dalam Three.js
+// Render array dalam Three.js
 function renderArray(nums) {
     // Hapus cube yang ada sebelumnya
     cubes.forEach(cube => scene.remove(cube));
@@ -70,17 +71,26 @@ function renderArray(nums) {
                 const unique = nums[index];
                 index++;
 
+                // Buat tekstur untuk angka
                 const cubeNumTexture = createTexture(unique);
-                const cubeNumMaterial = new THREE.MeshBasicMaterial({ map: cubeNumTexture });
-                const cube = new THREE.Mesh(cubeGeometry, cubeNumMaterial);
 
+                // Beri warna acak untuk setiap kubus
+                const randomColor = new THREE.Color(Math.random(), Math.random(), Math.random());
+                const cubeNumMaterial = new THREE.MeshBasicMaterial({ 
+                    map: cubeNumTexture, 
+                    color: randomColor  // Warna acak
+                });
+
+                const cube = new THREE.Mesh(cubeGeometry, cubeNumMaterial);
                 cube.position.set(x * offset, y * offset, z * offset);
+                
                 scene.add(cube);
                 cubes.push(cube);
             }
         }
     }
 }
+
 
 // Fungsi untuk menambahkan star field (bidang bintang)
 function addStarField() {
