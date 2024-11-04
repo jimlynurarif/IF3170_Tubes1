@@ -8,7 +8,7 @@ import copy
 
 app = Flask(__name__)
 CORS(app)
-
+iteration_data = []
 nums = []
 magic_number = 315  # Magic number for 5x5x5 Diagonal Magic Cube
 
@@ -29,10 +29,13 @@ def okay():
 
 def array_algorithm_result(algorithm):
     global nums
+    global iteration_data
     if algorithm == 'SimulatedAnnealing':
         return simulated_annealing(nums)
     elif algorithm == 'SteepestAscent':
-        return steepestAscent(nums, objectiveFunctionSteepest(nums))
+        iteration_data = []
+        states, iteration_data = steepestAscent(nums, objectiveFunctionSteepest(nums), [])
+        return states
     return list(range(1, 126))
 
 def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None):
@@ -91,7 +94,7 @@ def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None)
     return total_difference
 
 # Tambahkan variabel global untuk menyimpan nilai objective function per iterasi
-iteration_data = []
+
 
 def simulated_annealing(nums):
     global iteration_data
