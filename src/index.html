@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Tambahkan Chart.js -->
-    <script type="module" src="/src/js/scripts.js"></script>
     <style>
-        body {
-            margin: 0;
+
+        select {
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            color: white;
+            background-color: blue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
@@ -20,6 +40,6 @@
     </select>
     <button id="startButton">Start</button>
     <button id="okayButton">Okay</button>
-    <canvas id="objectiveChart" width="400" height="200"></canvas> <!-- Canvas untuk Chart -->
+    <canvas id="objectiveChart" width="400" height="200"></canvas>
 </body>
 </html>
