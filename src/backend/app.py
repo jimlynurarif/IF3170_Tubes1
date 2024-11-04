@@ -104,6 +104,7 @@ def simulated_annealing(nums):
     T_min = 0.001  # Minimum temperature
     alpha = 0.9999  # Cooling rate
     n = 5          # Cube dimension
+    local_optima_count = 0  # Counter for stuck in local optima
 
     current_state = [nums[i * 25:(i + 1) * 25] for i in range(5)]
     current_state = [[current_state[z][y * 5:(y + 1) * 5] for y in range(5)] for z in range(5)]
@@ -125,6 +126,7 @@ def simulated_annealing(nums):
             current_cost = new_cost
         else:
             current_state[z1][y1][x1], current_state[z2][y2][x2] = old_val_1, old_val_2
+            local_optima_count += 1  # Increment counter for local optima
 
         T *= alpha
 
@@ -132,12 +134,21 @@ def simulated_annealing(nums):
         iteration_data.append(current_cost)
 
     final_state = [num for layer in current_state for row in layer for num in row]
+
+    # Save the local optima count
+    global stuck_local_optima
+    stuck_local_optima = local_optima_count
+
     return final_state
 
 # Endpoint untuk mengirim data iterasi ke frontend
 @app.route('/get-iteration-data', methods=['GET'])
 def get_iteration_data():
     return jsonify(iteration_data)
+
+@app.route('/get-stuck-local-optima', methods=['GET'])
+def get_stuck_local_optima():
+    return jsonify(stuck_local_optima)
 
 if __name__ == '__main__':
     app.run(debug=True)

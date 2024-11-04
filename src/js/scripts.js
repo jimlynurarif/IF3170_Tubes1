@@ -33,6 +33,14 @@ function displayChart(data) {
         }
     });
 }
+
+
+async function fetchStuckLocalOptima() {
+    const response = await fetch('http://127.0.0.1:5000/get-stuck-local-optima');
+    const data = await response.json();
+    document.getElementById('stuckLocalOptimaCount').innerText = `Stuck di Local Optima: ${data}`;
+}
+
 // Fungsi untuk membuat tekstur dengan angka di dalamnya
 function createTexture(number) {
     const canvas = document.createElement('canvas');
@@ -171,7 +179,8 @@ function init() {
     document.getElementById("startButton").addEventListener("click", startAlgorithm);
     document.getElementById("okayButton").addEventListener("click", async () => {
         await sendOkay();
-        await fetchIterationData();  // Panggil fungsi untuk mendapatkan dan menampilkan data iterasi
+        await fetchIterationData();
+        await fetchStuckLocalOptima();
     });
     animate();
 }
