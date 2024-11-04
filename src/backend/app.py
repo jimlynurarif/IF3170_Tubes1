@@ -5,17 +5,21 @@ from flask_cors import CORS
 import random
 import math
 import copy
+import time
 
 app = Flask(__name__)
 CORS(app)
 iteration_data = []
 nums = []
 magic_number = 315  # Magic number for 5x5x5 Diagonal Magic Cube
+duration = 0
 
 # Generate initial random state for the 5x5x5 cube
 @app.route('/start-algorithm', methods=['POST'])
 def start_algorithm():
     global nums
+    global duration
+    duration = 0
     nums = list(range(1, 126))  # Numbers from 1 to 125
     random.shuffle(nums)
     return jsonify(nums)
@@ -98,6 +102,8 @@ def objective_function(cube, x=None, y=None, z=None, old_val=None, new_val=None)
 
 def simulated_annealing(nums):
     global iteration_data
+    global duration
+    start_time = time.time()
     iteration_data = []  # Reset data iterasi
 
     T = 100.0      # Initial temperature
@@ -139,6 +145,8 @@ def simulated_annealing(nums):
     global stuck_local_optima
     stuck_local_optima = local_optima_count
 
+    duration = time.time() - start_time
+
     return final_state
 
 # Endpoint untuk mengirim data iterasi ke frontend
@@ -149,6 +157,10 @@ def get_iteration_data():
 @app.route('/get-stuck-local-optima', methods=['GET'])
 def get_stuck_local_optima():
     return jsonify(stuck_local_optima)
+
+@app.route('/get-duration', methods=['GET'])
+def get_duration():
+    return jsonify(duration)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,6 +10,16 @@ async function fetchIterationData() {
     displayChart(data);  // Panggil fungsi untuk menampilkan chart
 }
 
+async function fetchDuration() {
+    const response = await fetch('http://127.0.0.1:5000/get-duration');
+    const data = await response.json();
+    displayDuration(data);
+}
+
+function displayDuration(data){
+    document.getElementById('duration').innerText = `Durasi: ${data} detik`;
+}
+
 function displayChart(data) {
     const ctx = document.getElementById('objectiveChart').getContext('2d');
     new Chart(ctx, {
@@ -179,8 +189,9 @@ function init() {
     document.getElementById("startButton").addEventListener("click", startAlgorithm);
     document.getElementById("okayButton").addEventListener("click", async () => {
         await sendOkay();
-        await fetchIterationData();
+        await fetchDuration();
         await fetchStuckLocalOptima();
+        await fetchIterationData();
     });
     animate();
 }
