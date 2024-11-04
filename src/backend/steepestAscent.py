@@ -1,4 +1,4 @@
-from backend.objectiveFunctionSteepest import objectiveFunction
+from objectiveFunctionSteepest import objectiveFunctionSteepest
 
 def findSteepestNeighbor(array:list, objectiveValue:int) -> list:
     currentList = list(array)
@@ -11,7 +11,7 @@ def findSteepestNeighbor(array:list, objectiveValue:int) -> list:
         for j in range(i+1, 125):
             tempArray = list(array)
             tempArray[i], tempArray[j] = tempArray[j], tempArray[i]
-            tempObjective = objectiveFunction(tempArray)
+            tempObjective = objectiveFunctionSteepest(tempArray)
 
             # print("tempArray:", tempArray)
             # print("tempObj:", tempObjective)
@@ -28,7 +28,7 @@ def steepestAscent(array:list, objectiveValue:int) -> list:
     if neighbor == array:
         return neighbor
     else:
-        return(steepestAscent(neighbor,objectiveFunction(neighbor)))
+        return(steepestAscent(neighbor,objectiveFunctionSteepest(neighbor)))
 
 a = [1 for i in range(125)]
 b = [0 for i in range(125)]
