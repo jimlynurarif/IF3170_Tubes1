@@ -10,6 +10,7 @@ import time
 app = Flask(__name__)
 CORS(app)
 iteration_data = []
+epsilon_plot = []
 nums = []
 magic_number = 315  # Magic number for 5x5x5 Diagonal Magic Cube
 duration = 0
@@ -110,8 +111,11 @@ def simulated_annealing(nums):
     global iteration_data
     global duration
     global epsilon_counter
+    global epsilon_plot
+
     start_time = time.time()
     iteration_data = []  # Reset data iterasi
+    epsilon_plot = []
 
     T = 100.0      # Initial temperature
     T_min = 0.001  # Minimum temperature
@@ -140,10 +144,12 @@ def simulated_annealing(nums):
         elif random.random() < math.exp((current_cost - new_cost) / T):
             current_cost = new_cost
             epsilon_counter += 1
+            epsilon_plot.append(epsilon_counter)
         else:
             current_state[z1][y1][x1], current_state[z2][y2][x2] = old_val_1, old_val_2
             local_optima_count += 1
             epsilon_counter += 1
+            epsilon_plot.append(epsilon_counter)
 
         T *= alpha
 
@@ -176,6 +182,10 @@ def get_duration():
 @app.route('/get-epsilon', methods=['GET'])
 def get_epsilon_counter():
     return jsonify(epsilon_counter)
+
+@app.route('/epsilon-plot', methods=['GET'])
+def epsilon_plot():
+    return jsonify(epsilon_plot)
 
 if __name__ == '__main__':
     app.run(debug=True)

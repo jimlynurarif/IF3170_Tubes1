@@ -10,6 +10,12 @@ async function fetchIterationData() {
     displayChart(data);  // Panggil fungsi untuk menampilkan chart
 }
 
+async function fetchEpsilonPlot() {
+    const response = await fetch('http://127.0.0.1:5000/epsilon-plot');
+    const data = await response.json();
+    displayEpsilonPlot(data);
+}
+
 async function fetchDuration() {
     const response = await fetch('http://127.0.0.1:5000/get-duration');
     const data = await response.json();
@@ -54,6 +60,29 @@ function displayChart(data) {
     });
 }
 
+function displayEpsilonPlot(data) {
+    const ctx = document.getElementById('epsilonChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: data.length }, (_, i) => i + 1),
+            datasets: [{
+                label: 'Epsilon Counter',
+                data: data,
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { display: true, title: { display: true, text: 'Iteration' } },
+                y: { display: true, title: { display: true, text: 'Epsilon Counter' } }
+            }
+        }
+    });
+}
 
 async function fetchStuckLocalOptima() {
     const response = await fetch('http://127.0.0.1:5000/get-stuck-local-optima');
@@ -203,6 +232,7 @@ function init() {
         await fetchEpsilon();
         await fetchStuckLocalOptima();
         await fetchIterationData();
+        await fetchEpsilonPlot();
     });
     animate();
 }
